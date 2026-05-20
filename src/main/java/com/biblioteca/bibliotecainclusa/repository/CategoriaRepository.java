@@ -5,4 +5,5 @@ import com.biblioteca.bibliotecainclusa.entity.Categoria;
 
 public interface CategoriaRepository extends JpaRepository<Categoria, Long> {
 
+    boolean existsByNome(String nome);
 }

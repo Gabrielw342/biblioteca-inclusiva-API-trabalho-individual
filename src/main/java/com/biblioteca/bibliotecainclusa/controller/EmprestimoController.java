@@ -27,11 +27,33 @@ public class EmprestimoController {
     @Operation(summary = "Lista todos os empréstimos")
     public List<EmprestimoResponseDTO> listar() {
         return service.listar();
+        
+    }
+    
+    @GetMapping("/{id}")
+    @Operation(summary = "Busca emprestimos por ID")
+    public EmprestimoResponseDTO buscarPorId(@PathVariable Long id) {
+        return service.buscarPorId(id);
+    
     }
 
     @PostMapping
     @Operation(summary = "Cria um novo empréstimo de livro")
     public EmprestimoResponseDTO salvar(@Valid @RequestBody EmprestimoRequestDTO dto) {
         return service.salvar(dto);
+    }
+    
+    @PutMapping("/{id}")
+    @Operation(summary = "Atualiza um empréstimo")
+    public EmprestimoResponseDTO atualizar(
+            @PathVariable Long id,
+            @Valid @RequestBody EmprestimoRequestDTO dto) {
+        return service.atualizar(id, dto);
+    }
+    
+    @DeleteMapping("/{id}")
+    @Operation(summary = "Remove um empréstimo")
+    public void deletar(@PathVariable Long id) {
+        service.deletar(id);
     }
 }

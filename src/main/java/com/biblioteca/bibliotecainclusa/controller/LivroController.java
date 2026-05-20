@@ -29,9 +29,29 @@ public class LivroController {
         return service.listar();
     }
 
+    @GetMapping("/{id}")
+    @Operation(summary = "Busca livro por ID")
+    public LivroResponseDTO buscarPorId(@PathVariable Long id) {
+        return service.buscarPorId(id);
+    }
+
     @PostMapping
     @Operation(summary = "Cadastra um novo livro com acessibilidade")
     public LivroResponseDTO salvar(@Valid @RequestBody LivroRequestDTO dto) {
         return service.salvar(dto);
+    }
+    
+    @PutMapping("/{id}")
+    @Operation(summary = "Atualiza um livro pelo ID")
+    public LivroResponseDTO atualizar(
+            @PathVariable Long id,
+            @Valid @RequestBody LivroRequestDTO dto) {
+        return service.atualizar(id, dto);
+    }
+    
+    @DeleteMapping("/{id}")
+    @Operation(summary = "Deleta um livro pelo ID")
+    public void deletar(@PathVariable Long id) {
+        service.deletar(id);
     }
 }

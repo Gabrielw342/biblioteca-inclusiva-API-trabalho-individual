@@ -1,33 +1,27 @@
 package com.biblioteca.bibliotecainclusa.dto.request;
 
-import jakarta.validation.constraints.NotBlank;
-import io.swagger.v3.oas.annotations.media.Schema;
-
 public class PerfilAcessibilidadeRequestDTO {
 
-    @NotBlank(message = "Tipo de acessibilidade é obrigatório")
-    @Schema(description = "Tipo de acessibilidade (ex: braile, áudio livro, leitor de tela, fonte grande)", example = "braile")
-    private String tipoAcessibilidade;
+    private String tipoNecessidade;
 
-    @Schema(description = "Descrição opcional da acessibilidade", example = "Versão do livro em braile para leitura tátil")
-    private String descricao;
+    private Long usuarioId;
 
     public PerfilAcessibilidadeRequestDTO() {
     }
 
-    public String getTipoAcessibilidade() {
-        return tipoAcessibilidade;
+    public String getTipoNecessidade() {
+        return tipoNecessidade;
     }
 
-    public void setTipoAcessibilidade(String tipoAcessibilidade) {
-        this.tipoAcessibilidade = tipoAcessibilidade;
+    public void setTipoNecessidade(String tipoNecessidade) {
+        this.tipoNecessidade = tipoNecessidade;
     }
 
-    public String getDescricao() {
-        return descricao;
+    public Long getUsuarioId() {
+        return usuarioId;
     }
 
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
+    public void setUsuarioId(Long usuarioId) {
+        this.usuarioId = usuarioId;
     }
 }

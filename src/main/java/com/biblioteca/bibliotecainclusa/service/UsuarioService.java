@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.biblioteca.bibliotecainclusa.dto.request.UsuarioRequestDTO;
 import com.biblioteca.bibliotecainclusa.dto.response.UsuarioResponseDTO;
 import com.biblioteca.bibliotecainclusa.entity.Usuario;
+import com.biblioteca.bibliotecainclusa.exception.ResourceNotFoundException;
 import com.biblioteca.bibliotecainclusa.repository.UsuarioRepository;
 
 @Service
@@ -24,6 +25,13 @@ public class UsuarioService {
                 .collect(Collectors.toList());
     }
 
+    public UsuarioResponseDTO buscarPorId(Long id) {
+        Usuario usuario = repository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Usuário não encontrado"));
+
+        return converterParaResponseDTO(usuario);
+    }
+
     public UsuarioResponseDTO salvar(UsuarioRequestDTO dto) {
         Usuario usuario = new Usuario();
 
@@ -36,18 +44,24 @@ public class UsuarioService {
         return converterParaResponseDTO(salvo);
     }
 
-    public UsuarioResponseDTO buscarPorId(Long id) {
-        Usuario usuario = repository.findById(id).orElse(null);
+    public UsuarioResponseDTO atualizar(Long id, UsuarioRequestDTO dto) {
+        Usuario usuario = repository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Usuário não encontrado"));
 
-        if (usuario == null) {
-            return null;
-        }
+        usuario.setNome(dto.getNome());
+        usuario.setEmail(dto.getEmail());
+        usuario.setCpf(dto.getCpf());
 
-        return converterParaResponseDTO(usuario);
+        Usuario atualizado = repository.save(usuario);
+
+        return converterParaResponseDTO(atualizado);
     }
 
     public void deletar(Long id) {
-        repository.deleteById(id);
+        Usuario usuario = repository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Usuário não encontrado"));
+
+        repository.delete(usuario);
     }
 
     private UsuarioResponseDTO converterParaResponseDTO(Usuario usuario) {

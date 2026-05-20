@@ -4,45 +4,31 @@ import io.swagger.v3.oas.annotations.media.Schema;
 
 public class PerfilAcessibilidadeResponseDTO {
 
-    @Schema(description = "ID do perfil de acessibilidade", example = "1")
-    private Long id;
+    private String tipoNecessidade;
 
-    @Schema(description = "Tipo de acessibilidade (braile, áudio livro, leitor de tela, fonte grande)", example = "braile")
-    private String tipoAcessibilidade;
-
-    @Schema(description = "Descrição da acessibilidade", example = "Versão do livro em braile para leitura tátil")
-    private String descricao;
+    private String usuario;
 
     public PerfilAcessibilidadeResponseDTO() {
     }
-
-    public PerfilAcessibilidadeResponseDTO(Long id, String tipoAcessibilidade, String descricao) {
-        this.id = id;
-        this.tipoAcessibilidade = tipoAcessibilidade;
-        this.descricao = descricao;
+    
+    public PerfilAcessibilidadeResponseDTO(String tipoNecessidade, String usuario) {
+        this.tipoNecessidade = tipoNecessidade;
+        this.usuario = usuario;
     }
 
-    public Long getId() {
-        return id;
+    public String getTipoNecessidade() {
+        return tipoNecessidade;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setTipoNecessidade(String tipoNecessidade) {
+        this.tipoNecessidade = tipoNecessidade;
     }
 
-    public String getTipoAcessibilidade() {
-        return tipoAcessibilidade;
+    public String getUsuario() {
+        return usuario;
     }
 
-    public void setTipoAcessibilidade(String tipoAcessibilidade) {
-        this.tipoAcessibilidade = tipoAcessibilidade;
-    }
-
-    public String getDescricao() {
-        return descricao;
-    }
-
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
+    public void setUsuario(String usuario) {
+        this.usuario = usuario;
     }
 }

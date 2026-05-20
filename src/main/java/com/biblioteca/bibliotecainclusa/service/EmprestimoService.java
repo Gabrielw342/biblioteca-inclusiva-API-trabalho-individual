@@ -11,6 +11,7 @@ import com.biblioteca.bibliotecainclusa.dto.response.EmprestimoResponseDTO;
 import com.biblioteca.bibliotecainclusa.entity.Emprestimo;
 import com.biblioteca.bibliotecainclusa.entity.Livro;
 import com.biblioteca.bibliotecainclusa.entity.Usuario;
+import com.biblioteca.bibliotecainclusa.exception.ResourceNotFoundException;
 import com.biblioteca.bibliotecainclusa.repository.EmprestimoRepository;
 import com.biblioteca.bibliotecainclusa.repository.LivroRepository;
 import com.biblioteca.bibliotecainclusa.repository.UsuarioRepository;
@@ -28,22 +29,32 @@ public class EmprestimoService {
     private LivroRepository livroRepository;
 
     public List<EmprestimoResponseDTO> listar() {
-        return repository.findAll().stream()
-                .map(e -> new EmprestimoResponseDTO(
-                        e.getDataEmprestimo(),
-                        e.getDataDevolucao(),
-                        e.getUsuario().getNome(),
-                        e.getLivro().getTitulo()))
+
+        return repository.findAll()
+                .stream()
+                .map(this::converterParaDTO)
                 .collect(Collectors.toList());
+    }
+
+    public EmprestimoResponseDTO buscarPorId(Long id) {
+
+        Emprestimo emprestimo = repository.findById(id)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("Empréstimo não encontrado"));
+
+        return converterParaDTO(emprestimo);
     }
 
     public EmprestimoResponseDTO salvar(EmprestimoRequestDTO dto) {
 
-    	Usuario usuario = usuarioRepository.findById(dto.getUsuarioId())
-    	        .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
+        Usuario usuario = usuarioRepository.findById(dto.getUsuarioId())
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("Usuário não encontrado"));
 
-    	Livro livro = livroRepository.findById(dto.getLivroId())
-    	        .orElseThrow(() -> new RuntimeException("Livro não encontrado"));
+        Livro livro = livroRepository.findById(dto.getLivroId())
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("Livro não encontrado"));
+
         Emprestimo emprestimo = new Emprestimo();
 
         emprestimo.setDataEmprestimo(dto.getDataEmprestimo());
@@ -51,12 +62,51 @@ public class EmprestimoService {
         emprestimo.setUsuario(usuario);
         emprestimo.setLivro(livro);
 
-        repository.save(emprestimo);
+        Emprestimo emprestimoSalvo = repository.save(emprestimo);
+
+        return converterParaDTO(emprestimoSalvo);
+    }
+
+    private EmprestimoResponseDTO converterParaDTO(Emprestimo emprestimo) {
 
         return new EmprestimoResponseDTO(
                 emprestimo.getDataEmprestimo(),
                 emprestimo.getDataDevolucao(),
-                usuario.getNome(),
-                livro.getTitulo());
+                emprestimo.getUsuario().getNome(),
+                emprestimo.getLivro().getTitulo()
+        );
+    }
+    
+    public void deletar(Long id) {
+
+        Emprestimo emprestimo = repository.findById(id)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("Empréstimo não encontrado"));
+
+        repository.delete(emprestimo);
+    }
+    
+    public EmprestimoResponseDTO atualizar(Long id, EmprestimoRequestDTO dto) {
+
+        Emprestimo emprestimo = repository.findById(id)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("Empréstimo não encontrado"));
+
+        Usuario usuario = usuarioRepository.findById(dto.getUsuarioId())
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("Usuário não encontrado"));
+
+        Livro livro = livroRepository.findById(dto.getLivroId())
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("Livro não encontrado"));
+
+        emprestimo.setUsuario(usuario);
+        emprestimo.setLivro(livro);
+        emprestimo.setDataEmprestimo(dto.getDataEmprestimo());
+        emprestimo.setDataDevolucao(dto.getDataDevolucao());
+
+        Emprestimo atualizado = repository.save(emprestimo);
+
+        return converterParaDTO(atualizado);
     }
 }

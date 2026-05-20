@@ -25,25 +25,34 @@ public class UsuarioController {
     private UsuarioService service;
 
     @GetMapping
-    @Operation(summary = "Listar usuários", description = "Retorna todos os usuários cadastrados")
+    @Operation(summary = "Listar usuários")
     public List<UsuarioResponseDTO> listar() {
         return service.listar();
     }
 
-    @PostMapping
-    @Operation(summary = "Criar usuário", description = "Cadastra um novo usuário na biblioteca")
-    public UsuarioResponseDTO salvar(@Valid @RequestBody UsuarioRequestDTO dto) {
-        return service.salvar(dto);
-    }
-
     @GetMapping("/{id}")
-    @Operation(summary = "Buscar usuário por ID", description = "Retorna um usuário pela sua ID")
+    @Operation(summary = "Buscar usuário por ID")
     public UsuarioResponseDTO buscarPorId(@PathVariable Long id) {
         return service.buscarPorId(id);
     }
 
+    @PostMapping
+    @Operation(summary = "Criar usuário")
+    public UsuarioResponseDTO salvar(@Valid @RequestBody UsuarioRequestDTO dto) {
+        return service.salvar(dto);
+    }
+
+   
+    @PutMapping("/{id}")
+    @Operation(summary = "Atualizar usuário")
+    public UsuarioResponseDTO atualizar(
+            @PathVariable Long id,
+            @Valid @RequestBody UsuarioRequestDTO dto) {
+        return service.atualizar(id, dto);
+    }
+
     @DeleteMapping("/{id}")
-    @Operation(summary = "Deletar usuário", description = "Remove um usuário pelo ID")
+    @Operation(summary = "Deletar usuário")
     public void deletar(@PathVariable Long id) {
         service.deletar(id);
     }
