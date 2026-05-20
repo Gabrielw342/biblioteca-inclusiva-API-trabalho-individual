@@ -1,12 +1,15 @@
 package com.biblioteca.bibliotecainclusa.entity;
 
 import java.time.LocalDate;
-import java.util.List;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 
 @Entity
-@Table(name = "emprestimo")
 public class Emprestimo {
 
     @Id
@@ -15,34 +18,21 @@ public class Emprestimo {
 
     private LocalDate dataEmprestimo;
 
+    private LocalDate dataDevolucao;
+
     @ManyToOne
     @JoinColumn(name = "usuario_id")
     private Usuario usuario;
 
-    @ManyToMany
-    @JoinTable(
-        name = "emprestimo_livro",
-        joinColumns = @JoinColumn(name = "emprestimo_id"),
-        inverseJoinColumns = @JoinColumn(name = "livro_id")
-    )
-    private List<Livro> livros;
+    @ManyToOne
+    @JoinColumn(name = "livro_id")
+    private Livro livro;
 
     public Emprestimo() {
     }
 
-    public Emprestimo(Long id, LocalDate dataEmprestimo, Usuario usuario, List<Livro> livros) {
-        this.id = id;
-        this.dataEmprestimo = dataEmprestimo;
-        this.usuario = usuario;
-        this.livros = livros;
-    }
-
     public Long getId() {
         return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public LocalDate getDataEmprestimo() {
@@ -53,6 +43,14 @@ public class Emprestimo {
         this.dataEmprestimo = dataEmprestimo;
     }
 
+    public LocalDate getDataDevolucao() {
+        return dataDevolucao;
+    }
+
+    public void setDataDevolucao(LocalDate dataDevolucao) {
+        this.dataDevolucao = dataDevolucao;
+    }
+
     public Usuario getUsuario() {
         return usuario;
     }
@@ -61,11 +59,11 @@ public class Emprestimo {
         this.usuario = usuario;
     }
 
-    public List<Livro> getLivros() {
-        return livros;
+    public Livro getLivro() {
+        return livro;
     }
 
-    public void setLivros(List<Livro> livros) {
-        this.livros = livros;
+    public void setLivro(Livro livro) {
+        this.livro = livro;
     }
 }

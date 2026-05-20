@@ -1,9 +1,13 @@
 package com.biblioteca.bibliotecainclusa.entity;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 
 @Entity
-@Table(name = "livro")
 public class Livro {
 
     @Id
@@ -13,10 +17,12 @@ public class Livro {
     private String titulo;
 
     private String autor;
-
+    
+    private String editora;
+    
     private String isbn;
-
-    private Boolean disponivel;
+    
+    private Integer anoLancamento;
 
     @ManyToOne
     @JoinColumn(name = "categoria_id")
@@ -25,60 +31,54 @@ public class Livro {
     public Livro() {
     }
 
-    public Livro(Long id, String titulo, String autor, String isbn, Boolean disponivel, Categoria categoria) {
-        this.id = id;
-        this.titulo = titulo;
-        this.autor = autor;
-        this.isbn = isbn;
-        this.disponivel = disponivel;
-        this.categoria = categoria;
-    }
+	public String getTitulo() {
+		return titulo;
+	}
 
-    public Long getId() {
-        return id;
-    }
+	public void setTitulo(String titulo) {
+		this.titulo = titulo;
+	}
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+	public String getAutor() {
+		return autor;
+	}
 
-    public String getTitulo() {
-        return titulo;
-    }
+	public void setAutor(String autor) {
+		this.autor = autor;
+	}
 
-    public void setTitulo(String titulo) {
-        this.titulo = titulo;
-    }
+	public String getEditora() {
+		return editora;
+	}
 
-    public String getAutor() {
-        return autor;
-    }
+	public void setEditora(String editora) {
+		this.editora = editora;
+	}
 
-    public void setAutor(String autor) {
-        this.autor = autor;
-    }
+	public String getIsbn() {
+		return isbn;
+	}
 
-    public String getIsbn() {
-        return isbn;
-    }
+	public void setIsbn(String isbn) {
+		this.isbn = isbn;
+	}
 
-    public void setIsbn(String isbn) {
-        this.isbn = isbn;
-    }
+	public Integer getAnoLancamento() {
+		return anoLancamento;
+	}
 
-    public Boolean getDisponivel() {
-        return disponivel;
-    }
+	public void setAnoLancamento(Integer anoLancamento) {
+		this.anoLancamento = anoLancamento;
+	}
 
-    public void setDisponivel(Boolean disponivel) {
-        this.disponivel = disponivel;
-    }
+	public Categoria getCategoria() {
+		return categoria;
+	}
 
-    public Categoria getCategoria() {
-        return categoria;
-    }
+	public void setCategoria(Categoria categoria) {
+		this.categoria = categoria;
+	}
 
-    public void setCategoria(Categoria categoria) {
-        this.categoria = categoria;
-    }
+    
+
 }
