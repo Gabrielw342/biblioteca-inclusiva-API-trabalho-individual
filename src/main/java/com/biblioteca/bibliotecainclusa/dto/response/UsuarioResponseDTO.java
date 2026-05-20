@@ -1,19 +1,21 @@
 package com.biblioteca.bibliotecainclusa.dto.response;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 public class UsuarioResponseDTO {
 
+    @Schema(description = "Nome do usuário", example = "João Silva")
     private String nome;
+
+    @Schema(description = "Email do usuário", example = "joao@email.com")
     private String email;
-   
 
     public UsuarioResponseDTO() {
     }
 
-    public UsuarioResponseDTO(Long id, String nome, String email, String cpf) {
-        
+    public UsuarioResponseDTO(String nome, String email) {
         this.nome = nome;
         this.email = email;
-       
     }
 
     public String getNome() {
@@ -30,6 +32,5 @@ public class UsuarioResponseDTO {
 
     public void setEmail(String email) {
         this.email = email;
-  
     }
 }

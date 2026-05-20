@@ -52,10 +52,8 @@ public class UsuarioService {
 
     private UsuarioResponseDTO converterParaResponseDTO(Usuario usuario) {
         return new UsuarioResponseDTO(
-                usuario.getId(),
                 usuario.getNome(),
-                usuario.getEmail(),
-                usuario.getCpf()
+                usuario.getEmail()
         );
     }
 }

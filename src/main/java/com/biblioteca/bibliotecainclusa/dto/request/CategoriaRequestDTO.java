@@ -1,10 +1,12 @@
 package com.biblioteca.bibliotecainclusa.dto.request;
 
 import jakarta.validation.constraints.NotBlank;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 public class CategoriaRequestDTO {
 
     @NotBlank(message = "Nome é obrigatório")
+    @Schema(description = "Nome da categoria", example = "COMEDIA")
     private String nome;
 
     public CategoriaRequestDTO() {

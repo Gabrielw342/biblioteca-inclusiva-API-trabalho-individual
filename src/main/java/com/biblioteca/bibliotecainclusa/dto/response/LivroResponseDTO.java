@@ -1,12 +1,25 @@
 package com.biblioteca.bibliotecainclusa.dto.response;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 public class LivroResponseDTO {
 
+    @Schema(description = "Título do livro", example = "Dom Casmurro")
     private String titulo;
+
+    @Schema(description = "Autor do livro", example = "Machado de Assis")
     private String autor;
+
+    @Schema(description = "Editora do livro", example = "Editora Globo")
     private String editora;
+
+    @Schema(description = "ISBN do livro", example = "9788535902775")
     private String isbn;
+
+    @Schema(description = "Ano de lançamento do livro", example = "1899")
     private Integer anoLancamento;
+
+    @Schema(description = "Categoria do livro", example = "Ficção")
     private String categoria;
 
     public LivroResponseDTO() {

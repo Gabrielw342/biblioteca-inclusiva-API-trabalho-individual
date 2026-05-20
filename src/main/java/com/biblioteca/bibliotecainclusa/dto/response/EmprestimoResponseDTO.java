@@ -2,11 +2,20 @@ package com.biblioteca.bibliotecainclusa.dto.response;
 
 import java.time.LocalDate;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 public class EmprestimoResponseDTO {
 
+    @Schema(description = "Data em que o livro foi emprestado", example = "2026-05-19")
     private LocalDate dataEmprestimo;
+
+    @Schema(description = "Data prevista de devolução do livro", example = "2026-05-26")
     private LocalDate dataDevolucao;
+
+    @Schema(description = "Nome do usuário que pegou o livro", example = "Ray Valdo")
     private String usuario;
+
+    @Schema(description = "Título do livro emprestado", example = "Como treinar seu dragao")
     private String livro;
 
     public EmprestimoResponseDTO() {

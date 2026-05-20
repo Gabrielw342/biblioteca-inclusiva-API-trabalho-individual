@@ -3,19 +3,24 @@ package com.biblioteca.bibliotecainclusa.dto.request;
 import java.time.LocalDate;
 
 import jakarta.validation.constraints.NotNull;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 public class EmprestimoRequestDTO {
 
     @NotNull(message = "Data do empréstimo é obrigatória")
+    @Schema(description = "Data em que o livro foi emprestado", example = "2026-05-19")
     private LocalDate dataEmprestimo;
 
     @NotNull(message = "Data da devolução é obrigatória")
+    @Schema(description = "Data prevista para devolução do livro", example = "2026-05-26")
     private LocalDate dataDevolucao;
 
     @NotNull(message = "Usuário é obrigatório")
+    @Schema(description = "ID do usuário que está pegando o livro", example = "1")
     private Long usuarioId;
 
     @NotNull(message = "Livro é obrigatório")
+    @Schema(description = "ID do livro emprestado", example = "69")
     private Long livroId;
 
     public EmprestimoRequestDTO() {
