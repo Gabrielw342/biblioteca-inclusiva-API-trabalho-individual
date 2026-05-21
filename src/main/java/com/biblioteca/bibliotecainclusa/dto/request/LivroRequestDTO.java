@@ -7,27 +7,45 @@ import io.swagger.v3.oas.annotations.media.Schema;
 public class LivroRequestDTO {
 
     @NotBlank(message = "Título é obrigatório")
-    @Schema(description = "Título do livro", example = "Inocencio Coitadinho")
+    @Schema(
+        description = "Título do livro",
+        example = "Inocêncio Coitadinho"
+    )
     private String titulo;
 
     @NotBlank(message = "Autor é obrigatório")
-    @Schema(description = "Autor do livro", example = "Vinho Diesel")
+    @Schema(
+        description = "Autor do livro",
+        example = "Vinho Diesel"
+    )
     private String autor;
 
     @NotBlank(message = "Editora é obrigatória")
-    @Schema(description = "Editora do livro", example = "Editora Sandfall")
+    @Schema(
+        description = "Editora do livro",
+        example = "Editora Sandfall"
+    )
     private String editora;
 
     @NotBlank(message = "ISBN é obrigatório")
-    @Schema(description = "Código ISBN do livro", example = "9788535902775")
+    @Schema(
+        description = "Código ISBN do livro",
+        example = "9788535902775"
+    )
     private String isbn;
 
     @NotNull(message = "Ano de lançamento é obrigatório")
-    @Schema(description = "Ano de lançamento do livro", example = "1899")
+    @Schema(
+        description = "Ano de lançamento do livro",
+        example = "1899"
+    )
     private Integer anoLancamento;
 
     @NotNull(message = "Categoria é obrigatória")
-    @Schema(description = "ID da categoria do livro", example = "1")
+    @Schema(
+        description = "ID da categoria do livro",
+        example = "1"
+    )
     private Long categoriaId;
 
     public LivroRequestDTO() {

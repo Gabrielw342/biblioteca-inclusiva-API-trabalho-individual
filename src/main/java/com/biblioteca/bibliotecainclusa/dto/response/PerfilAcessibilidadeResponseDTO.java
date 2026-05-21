@@ -4,31 +4,25 @@ import io.swagger.v3.oas.annotations.media.Schema;
 
 public class PerfilAcessibilidadeResponseDTO {
 
-    private String tipoNecessidade;
+    @Schema(description = "ID do perfil de acessibilidade", example = "1")
+    private Long id;
 
-    private String usuario;
+    @Schema(description = "Tipo de necessidade de acessibilidade", example = "Baixa visão")
+    private String tipoNecessidade;
 
     public PerfilAcessibilidadeResponseDTO() {
     }
-    
-    public PerfilAcessibilidadeResponseDTO(String tipoNecessidade, String usuario) {
+
+    public PerfilAcessibilidadeResponseDTO(Long id, String tipoNecessidade) {
+        this.id = id;
         this.tipoNecessidade = tipoNecessidade;
-        this.usuario = usuario;
+    }
+
+    public Long getId() {
+        return id;
     }
 
     public String getTipoNecessidade() {
         return tipoNecessidade;
-    }
-
-    public void setTipoNecessidade(String tipoNecessidade) {
-        this.tipoNecessidade = tipoNecessidade;
-    }
-
-    public String getUsuario() {
-        return usuario;
-    }
-
-    public void setUsuario(String usuario) {
-        this.usuario = usuario;
     }
 }

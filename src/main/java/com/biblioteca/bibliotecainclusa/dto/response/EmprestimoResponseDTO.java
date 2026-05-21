@@ -15,7 +15,7 @@ public class EmprestimoResponseDTO {
     @Schema(description = "Nome do usuário que pegou o livro", example = "Ray Valdo")
     private String usuario;
 
-    @Schema(description = "Título do livro emprestado", example = "Como treinar seu dragao")
+    @Schema(description = "Título do livro emprestado", example = "Como treinar seu dragão")
     private String livro;
 
     public EmprestimoResponseDTO() {
@@ -32,28 +32,28 @@ public class EmprestimoResponseDTO {
         return dataEmprestimo;
     }
 
-    public void setDataEmprestimo(LocalDate dataEmprestimo) {
-        this.dataEmprestimo = dataEmprestimo;
-    }
-
     public LocalDate getDataDevolucao() {
         return dataDevolucao;
-    }
-
-    public void setDataDevolucao(LocalDate dataDevolucao) {
-        this.dataDevolucao = dataDevolucao;
     }
 
     public String getUsuario() {
         return usuario;
     }
 
-    public void setUsuario(String usuario) {
-        this.usuario = usuario;
-    }
-
     public String getLivro() {
         return livro;
+    }
+
+    public void setDataEmprestimo(LocalDate dataEmprestimo) {
+        this.dataEmprestimo = dataEmprestimo;
+    }
+
+    public void setDataDevolucao(LocalDate dataDevolucao) {
+        this.dataDevolucao = dataDevolucao;
+    }
+
+    public void setUsuario(String usuario) {
+        this.usuario = usuario;
     }
 
     public void setLivro(String livro) {

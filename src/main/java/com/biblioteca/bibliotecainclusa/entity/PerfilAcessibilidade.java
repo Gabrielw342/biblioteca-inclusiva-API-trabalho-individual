@@ -1,5 +1,8 @@
 package com.biblioteca.bibliotecainclusa.entity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import jakarta.persistence.*;
 
 @Entity
@@ -12,17 +15,15 @@ public class PerfilAcessibilidade {
 
     private String tipoNecessidade;
 
-    @OneToOne
-    @JoinColumn(name = "usuario_id")
-    private Usuario usuario;
+    @ManyToMany(mappedBy = "perfis")
+    private List<Usuario> usuarios = new ArrayList<>();
 
     public PerfilAcessibilidade() {
     }
 
-    public PerfilAcessibilidade(Long id, String tipoNecessidade, Usuario usuario) {
+    public PerfilAcessibilidade(Long id, String tipoNecessidade) {
         this.id = id;
         this.tipoNecessidade = tipoNecessidade;
-        this.usuario = usuario;
     }
 
     public Long getId() {
@@ -41,11 +42,11 @@ public class PerfilAcessibilidade {
         this.tipoNecessidade = tipoNecessidade;
     }
 
-    public Usuario getUsuario() {
-        return usuario;
+    public List<Usuario> getUsuarios() {
+        return usuarios;
     }
 
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
+    public void setUsuarios(List<Usuario> usuarios) {
+        this.usuarios = usuarios;
     }
 }

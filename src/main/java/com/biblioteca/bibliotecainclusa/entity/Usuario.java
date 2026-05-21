@@ -1,5 +1,8 @@
 package com.biblioteca.bibliotecainclusa.entity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import jakarta.persistence.*;
 
 @Entity
@@ -15,6 +18,14 @@ public class Usuario {
     private String email;
 
     private String cpf;
+
+    @ManyToMany
+    @JoinTable(
+        name = "usuario_perfil_acessibilidade",
+        joinColumns = @JoinColumn(name = "usuario_id"),
+        inverseJoinColumns = @JoinColumn(name = "perfil_id")
+    )
+    private List<PerfilAcessibilidade> perfis = new ArrayList<>();
 
     public Usuario() {
     }
@@ -56,5 +67,13 @@ public class Usuario {
 
     public void setCpf(String cpf) {
         this.cpf = cpf;
+    }
+
+    public List<PerfilAcessibilidade> getPerfis() {
+        return perfis;
+    }
+
+    public void setPerfis(List<PerfilAcessibilidade> perfis) {
+        this.perfis = perfis;
     }
 }

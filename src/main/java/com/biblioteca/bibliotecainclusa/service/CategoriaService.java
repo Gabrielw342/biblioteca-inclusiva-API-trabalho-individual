@@ -52,6 +52,12 @@ public class CategoriaService {
         Categoria categoria = repository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Categoria não encontrada"));
 
+       
+        if (repository.existsByNome(dto.getNome()) &&
+            !categoria.getNome().equals(dto.getNome())) {
+            throw new DuplicateEntryException("Categoria já existe");
+        }
+
         categoria.setNome(dto.getNome());
 
         Categoria atualizada = repository.save(categoria);

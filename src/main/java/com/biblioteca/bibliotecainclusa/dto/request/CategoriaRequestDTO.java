@@ -6,7 +6,10 @@ import io.swagger.v3.oas.annotations.media.Schema;
 public class CategoriaRequestDTO {
 
     @NotBlank(message = "Nome é obrigatório")
-    @Schema(description = "Nome da categoria", example = "COMEDIA")
+    @Schema(
+        description = "Nome da categoria do livro",
+        example = "COMEDIA"
+    )
     private String nome;
 
     public CategoriaRequestDTO() {

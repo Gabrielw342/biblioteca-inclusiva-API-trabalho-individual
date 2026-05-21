@@ -1,9 +1,10 @@
 package com.biblioteca.bibliotecainclusa.service;
 
-import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,11 +29,9 @@ public class LivroService {
     @Autowired
     private EmprestimoRepository emprestimoRepository;
 
-    public List<LivroResponseDTO> listar() {
-        return livroRepository.findAll()
-                .stream()
-                .map(this::converterParaDTO)
-                .collect(Collectors.toList());
+    public Page<LivroResponseDTO> listar(Pageable pageable) {
+        return livroRepository.findAll(pageable)
+                .map(this::converterParaDTO);
     }
 
     public LivroResponseDTO buscarPorId(Long id) {
@@ -70,24 +69,11 @@ public class LivroService {
                 .orElseThrow(() ->
                         new ResourceNotFoundException("Livro não encontrado"));
 
-        
         emprestimoRepository.deleteByLivroId(id);
 
-       
         livroRepository.delete(livro);
     }
 
-    private LivroResponseDTO converterParaDTO(Livro livro) {
-        return new LivroResponseDTO(
-                livro.getTitulo(),
-                livro.getAutor(),
-                livro.getEditora(),
-                livro.getIsbn(),
-                livro.getAnoLancamento(),
-                livro.getCategoria().getNome()
-        );
-    }
-    
     public LivroResponseDTO atualizar(Long id, LivroRequestDTO dto) {
 
         Livro livro = livroRepository.findById(id)
@@ -108,5 +94,16 @@ public class LivroService {
         Livro atualizado = livroRepository.save(livro);
 
         return converterParaDTO(atualizado);
+    }
+
+    private LivroResponseDTO converterParaDTO(Livro livro) {
+        return new LivroResponseDTO(
+                livro.getTitulo(),
+                livro.getAutor(),
+                livro.getEditora(),
+                livro.getIsbn(),
+                livro.getAnoLancamento(),
+                livro.getCategoria().getNome()
+        );
     }
 }

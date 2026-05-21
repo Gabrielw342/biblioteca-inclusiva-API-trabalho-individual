@@ -9,19 +9,14 @@ import org.springframework.stereotype.Service;
 import com.biblioteca.bibliotecainclusa.dto.request.PerfilAcessibilidadeRequestDTO;
 import com.biblioteca.bibliotecainclusa.dto.response.PerfilAcessibilidadeResponseDTO;
 import com.biblioteca.bibliotecainclusa.entity.PerfilAcessibilidade;
-import com.biblioteca.bibliotecainclusa.entity.Usuario;
 import com.biblioteca.bibliotecainclusa.exception.ResourceNotFoundException;
 import com.biblioteca.bibliotecainclusa.repository.PerfilAcessibilidadeRepository;
-import com.biblioteca.bibliotecainclusa.repository.UsuarioRepository;
 
 @Service
 public class PerfilAcessibilidadeService {
 
     @Autowired
     private PerfilAcessibilidadeRepository repository;
-
-    @Autowired
-    private UsuarioRepository usuarioRepository;
 
     public List<PerfilAcessibilidadeResponseDTO> listar() {
         return repository.findAll()
@@ -39,14 +34,12 @@ public class PerfilAcessibilidadeService {
 
     public PerfilAcessibilidadeResponseDTO salvar(PerfilAcessibilidadeRequestDTO dto) {
 
-        Usuario usuario = usuarioRepository.findById(dto.getUsuarioId())
-                .orElseThrow(() -> new ResourceNotFoundException("Usuário não encontrado"));
-
         PerfilAcessibilidade perfil = new PerfilAcessibilidade();
         perfil.setTipoNecessidade(dto.getTipoNecessidade());
-        perfil.setUsuario(usuario);
 
-        return converterParaDTO(repository.save(perfil));
+        PerfilAcessibilidade salvo = repository.save(perfil);
+
+        return converterParaDTO(salvo);
     }
 
     public PerfilAcessibilidadeResponseDTO atualizar(Long id, PerfilAcessibilidadeRequestDTO dto) {
@@ -54,13 +47,11 @@ public class PerfilAcessibilidadeService {
         PerfilAcessibilidade perfil = repository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Perfil não encontrado"));
 
-        Usuario usuario = usuarioRepository.findById(dto.getUsuarioId())
-                .orElseThrow(() -> new ResourceNotFoundException("Usuário não encontrado"));
-
         perfil.setTipoNecessidade(dto.getTipoNecessidade());
-        perfil.setUsuario(usuario);
 
-        return converterParaDTO(repository.save(perfil));
+        PerfilAcessibilidade atualizado = repository.save(perfil);
+
+        return converterParaDTO(atualizado);
     }
 
     public void deletar(Long id) {
@@ -73,8 +64,8 @@ public class PerfilAcessibilidadeService {
 
     private PerfilAcessibilidadeResponseDTO converterParaDTO(PerfilAcessibilidade perfil) {
         return new PerfilAcessibilidadeResponseDTO(
-                perfil.getTipoNecessidade(),
-                perfil.getUsuario().getNome()
+                perfil.getId(),
+                perfil.getTipoNecessidade()
         );
     }
 }

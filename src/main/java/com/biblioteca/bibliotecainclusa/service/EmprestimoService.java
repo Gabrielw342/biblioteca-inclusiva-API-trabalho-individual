@@ -67,25 +67,6 @@ public class EmprestimoService {
         return converterParaDTO(emprestimoSalvo);
     }
 
-    private EmprestimoResponseDTO converterParaDTO(Emprestimo emprestimo) {
-
-        return new EmprestimoResponseDTO(
-                emprestimo.getDataEmprestimo(),
-                emprestimo.getDataDevolucao(),
-                emprestimo.getUsuario().getNome(),
-                emprestimo.getLivro().getTitulo()
-        );
-    }
-    
-    public void deletar(Long id) {
-
-        Emprestimo emprestimo = repository.findById(id)
-                .orElseThrow(() ->
-                        new ResourceNotFoundException("Empréstimo não encontrado"));
-
-        repository.delete(emprestimo);
-    }
-    
     public EmprestimoResponseDTO atualizar(Long id, EmprestimoRequestDTO dto) {
 
         Emprestimo emprestimo = repository.findById(id)
@@ -108,5 +89,24 @@ public class EmprestimoService {
         Emprestimo atualizado = repository.save(emprestimo);
 
         return converterParaDTO(atualizado);
+    }
+
+    public void deletar(Long id) {
+
+        Emprestimo emprestimo = repository.findById(id)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("Empréstimo não encontrado"));
+
+        repository.delete(emprestimo);
+    }
+
+    private EmprestimoResponseDTO converterParaDTO(Emprestimo emprestimo) {
+
+        return new EmprestimoResponseDTO(
+                emprestimo.getDataEmprestimo(),
+                emprestimo.getDataDevolucao(),
+                emprestimo.getUsuario().getNome(),
+                emprestimo.getLivro().getTitulo()
+        );
     }
 }
